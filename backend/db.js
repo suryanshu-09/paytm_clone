@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const mongo_link = require("./.env");
+const { mongo_link } = require("./.env");
 
 mongoose.connect(mongo_link);
 

@@ -2,7 +2,7 @@ const express = require("express");
 const zod = require("zod");
 const jwt = require("jsonwebtoken")
 const router = express.Router();
-const User = require("../db");
+const { User, Account } = require("../db");
 const { SECRET } = require("../.env");
 const { authMiddleware } = require("../middleware");
 
@@ -71,7 +71,7 @@ router.post("/signin", async (req, res) => {
     const userId = existingUser._id;
     res.status(200).json({
       msg: "You've signed in.",
-      token: jwt({
+      token: jwt.sign({
         userId,
       }, SECRET)
     })
@@ -123,7 +123,5 @@ router.put("/", authMiddleware, async (req, res) => {
     msg: "Updated successfully"
   })
 })
-
-
 
 module.exports = router;

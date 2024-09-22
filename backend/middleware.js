@@ -3,12 +3,12 @@ const jwt = require("jsonwebtoken");
 
 const authMiddleware = (req, res, next) => {
   const authHeader = req.headers.authorization;
-  if (!authHeader || authHeader.startsWith("Bearer ")) {
+  if (!authHeader || !authHeader.startsWith("Bearer ")) {
     return res.status(403).json({
       msg: "Authentication error."
     })
   }
-  const token = authHeader.split(" ");
+  const token = authHeader.split(" ")[1];
   try {
     const decoded = jwt.verify(token, SECRET);
     req.headers.userId = decoded.userId;
@@ -20,4 +20,6 @@ const authMiddleware = (req, res, next) => {
   }
 }
 
-module.exports = authMiddleware;
+module.exports = {
+  authMiddleware
+};
